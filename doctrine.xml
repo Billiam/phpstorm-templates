@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templateSet group="doctrine">
+  <template name="d:col" value="@ORM\Column(type=&quot;$TYPE$&quot;, length=$LENGTH$, nullable=$NULLABLE$)" toReformat="false" toShortenFQNames="true">
+    <variable name="TYPE" expression="enum(&quot;string&quot;, &quot;integer&quot;, &quot;smallint&quot;, &quot;bigint&quot;, &quot;boolean&quot;, &quot;decimal&quot;, &quot;date&quot;, &quot;time&quot;, &quot;datetime&quot;, &quot;text&quot;, &quot;object&quot;, &quot;array&quot;, &quot;float&quot;)" defaultValue="string" alwaysStopAt="true" />
+    <variable name="LENGTH" expression="" defaultValue="255" alwaysStopAt="true" />
+    <variable name="NULLABLE" expression="" defaultValue="true" alwaysStopAt="true" />
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="d:ent" value="@ORM\Entity(repositoryClass=&quot;$REPO$Repository&quot;)" toReformat="false" toShortenFQNames="true">
+    <variable name="REPO" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="d:dec" value="@ORM\Column(type=&quot;decimal&quot;, precision=$PRECISION$, scale=$SCALE$, nullable=$NULLABLE$)" toReformat="false" toShortenFQNames="true">
+    <variable name="PRECISION" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="SCALE" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="NULLABLE" expression="" defaultValue="true" alwaysStopAt="true" />
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="d:inherit" value="@ORM\InheritanceType(&quot;$INHERITANCE$&quot;)&#10;* @ORM\DiscriminatorColumn(name=&quot;discr&quot;, type=&quot;string&quot;)&#10;* @ORM\DiscriminatorMap({&quot;person&quot; = &quot;Person&quot;, &quot;employee&quot; = &quot;Employee&quot;})" toReformat="false" toShortenFQNames="true">
+    <variable name="INHERITANCE" expression="enum(&quot;SINGLE_TABLE&quot;,&quot;JOINED&quot;)" defaultValue="SINGLE_TABLE" alwaysStopAt="true" />
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="d:mm" value="@ManyToMany(targetEntity=&quot;$ENTITY$&quot;, inversedBy=&quot;features&quot;)&#10;@JoinTable(name=&quot;user_groups&quot;,&#10;    joinColumns={@JoinColumn(name=&quot;user_id&quot;, referencedColumnName=&quot;id&quot;)},&#10;    inverseJoinColumns={@JoinColumn(name=&quot;group_id&quot;, referencedColumnName=&quot;id&quot;)}&#10;)" toReformat="false" toShortenFQNames="true">
+    <variable name="ENTITY" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="d:mmi" value="@ManyToMany(targetEntity=&quot;$ENTITY$&quot;, mappedBy=&quot;$FIELD$&quot;)" toReformat="false" toShortenFQNames="true">
+    <variable name="ENTITY" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="FIELD" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="d:native" value="@NamedNativeQueries({&#10;*      @NamedNativeQuery(&#10;*          name            = &quot;fetchJoinedAddress&quot;,&#10;*          resultSetMapping= &quot;mappingJoinedAddress&quot;,&#10;*          query           = &quot;SELECT u.id, u.name, u.status, a.id AS a_id, a.country, a.zip, a.city FROM cms_users u INNER JOIN cms_addresses a ON u.id = a.user_id WHERE u.username = ?&quot;&#10;*      ),&#10;* })&#10;* @SqlResultSetMappings({&#10;*      @SqlResultSetMapping(&#10;*          name    = &quot;mappingJoinedAddress&quot;,&#10;*          entities= {&#10;*              @EntityResult(&#10;*                  entityClass = &quot;__CLASS__&quot;,&#10;*                  fields      = {&#10;*                      @FieldResult(name = &quot;id&quot;),&#10;*                      @FieldResult(name = &quot;name&quot;),&#10;*                      @FieldResult(name = &quot;status&quot;),&#10;*                      @FieldResult(name = &quot;address.zip&quot;),&#10;*                      @FieldResult(name = &quot;address.city&quot;),&#10;*                      @FieldResult(name = &quot;address.country&quot;),&#10;*                      @FieldResult(name = &quot;address.id&quot;, column = &quot;a_id&quot;),&#10;*                  }&#10;*              )&#10;*          }&#10;*      )&#10;* })" toReformat="false" toShortenFQNames="true">
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="dd:mo" value="@ManyToOne(targetEntity=&quot;$ENTITY$&quot;, cascade={&quot;$CASCADE$&quot;}, fetch=&quot;$FETCH$&quot;)" toReformat="false" toShortenFQNames="true">
+    <variable name="ENTITY" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="CASCADE" expression="enum(&quot;all&quot;,&quot;persist&quot;,&quot;remove&quot;,&quot;merge&quot;)" defaultValue="all" alwaysStopAt="true" />
+    <variable name="FETCH" expression="enum(&quot;LAZY&quot;,&quot;EXTRA_LAZY&quot;,&quot;EAGER&quot;" defaultValue="EAGER" alwaysStopAt="true" />
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="dd:oo" value="@OneToOne(targetEntity=&quot;$ENTITY$&quot;, cascade={&quot;$CASCADE$&quot;}, fetch=&quot;$FETCH$&quot;, orphanRemoval=$ORPHAN$, inversedBy=&quot;$INVERSE$&quot;)" toReformat="false" toShortenFQNames="true">
+    <variable name="ENTITY" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="CASCADE" expression="enum(&quot;all&quot;,&quot;persist&quot;,&quot;remove&quot;,&quot;merge&quot;)" defaultValue="all" alwaysStopAt="true" />
+    <variable name="FETCH" expression="enum(&quot;LAZY&quot;,&quot;EXTRA_LAZY&quot;,&quot;EAGER&quot;" defaultValue="EAGER" alwaysStopAt="true" />
+    <variable name="ORPHAN" expression="enum(&quot;true&quot;,&quot;false&quot;)" defaultValue="" alwaysStopAt="true" />
+    <variable name="INVERSE" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+  <template name="d:j" value="@JoinColumn(name=&quot;$COLUMN$&quot;, referencedColumnName=&quot;$REFERENCE$&quot;)" toReformat="false" toShortenFQNames="true">
+    <variable name="COLUMN" expression="" defaultValue="" alwaysStopAt="true" />
+    <variable name="REFERENCE" expression="" defaultValue="" alwaysStopAt="true" />
+    <context>
+      <option name="PHP" value="true" />
+    </context>
+  </template>
+</templateSet>
+
